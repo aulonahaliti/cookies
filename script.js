@@ -2,26 +2,40 @@
 // console.log(document.cookie);
 
 // a function to set a cookie
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    let expires = "expires="+ date.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
-  }
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
 
 //   a function to Get a cookie
-function getCookie(name) {
-    let nameEQ = name + "=";
-    let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
-    for(let i = 0; i <ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(nameEQ) == 0) {
-        return c.substring(nameEQ.length, c.length);
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+  function checkCookie() {
+    let username = getCookie("username");
+    if (username != "") {
+    //  alert("Welcome again " + username);
+     document.getElementById("Titulli").textContent = "Welcome back  " + username + "!";
+    } else {
+      // username = prompt("Please enter your name:", "");
+      username = document.getElementById("inpuuut").value;
+      if (username != "" && username != null) {
+        setCookie("username", username, 365);
       }
     }
-    return "";
   }
